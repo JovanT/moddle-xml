@@ -12,12 +12,12 @@ import {
 
 describe('Reader', function() {
 
-  var createModel = createModelBuilder('test/fixtures/model/');
+  const createModel = createModelBuilder('test/fixtures/model/');
 
 
   describe('api', function() {
 
-    var model = createModel([ 'properties' ]);
+    const model = createModel([ 'properties' ]);
 
 
     describe('callback style', function() {
@@ -25,10 +25,10 @@ describe('Reader', function() {
       it('should provide result with context', function(done) {
 
         // given
-        var reader = new Reader(model);
-        var rootHandler = reader.handler('props:ComplexAttrs');
+        const reader = new Reader(model);
+        const rootHandler = reader.handler('props:ComplexAttrs');
 
-        var xml = '<props:complexAttrs xmlns:props="http://properties"></props:complexAttrs>';
+        const xml = '<props:complexAttrs xmlns:props="http://properties"></props:complexAttrs>';
 
         // when
         reader.fromXML(xml, rootHandler, function(err, result, context) {
@@ -47,8 +47,8 @@ describe('Reader', function() {
       it('should provide error with context', function(done) {
 
         // given
-        var reader = new Reader(model);
-        var rootHandler = reader.handler('props:ComplexAttrs');
+        const reader = new Reader(model);
+        const rootHandler = reader.handler('props:ComplexAttrs');
 
         // when
         reader.fromXML('this-is-garbage', rootHandler, function(err, result, context) {
@@ -71,13 +71,13 @@ describe('Reader', function() {
       it('should provide result with context', async function() {
 
         // given
-        var reader = new Reader(model);
-        var rootHandler = reader.handler('props:ComplexAttrs');
+        const reader = new Reader(model);
+        const rootHandler = reader.handler('props:ComplexAttrs');
 
-        var xml = '<props:complexAttrs xmlns:props="http://properties"></props:complexAttrs>';
+        const xml = '<props:complexAttrs xmlns:props="http://properties"></props:complexAttrs>';
 
         // when
-        var {
+        const {
           element,
           context
         } = await reader.fromXML(xml, rootHandler);
@@ -91,8 +91,8 @@ describe('Reader', function() {
       it('should provide error with context', async function() {
 
         // given
-        var reader = new Reader(model);
-        var rootHandler = reader.handler('props:ComplexAttrs');
+        const reader = new Reader(model);
+        const rootHandler = reader.handler('props:ComplexAttrs');
 
         // when
         try {
@@ -114,8 +114,8 @@ describe('Reader', function() {
 
   describe('should import', function() {
 
-    var model = createModel([ 'properties' ]);
-    var extendedModel = createModel([ 'properties', 'properties-extended' ]);
+    const model = createModel([ 'properties' ]);
+    const extendedModel = createModel([ 'properties', 'properties-extended' ]);
 
 
     describe('data types', function() {
@@ -123,10 +123,10 @@ describe('Reader', function() {
       it('simple', async function() {
 
         // given
-        var reader = new Reader(model);
-        var rootHandler = reader.handler('props:ComplexAttrs');
+        const reader = new Reader(model);
+        const rootHandler = reader.handler('props:ComplexAttrs');
 
-        var xml = '<props:complexAttrs xmlns:props="http://properties">' +
+        const xml = '<props:complexAttrs xmlns:props="http://properties">' +
                     '<props:attrs integerValue="10" />' +
                   '</props:complexAttrs>';
 
@@ -149,10 +149,10 @@ describe('Reader', function() {
       it('simple / xsi:type', async function() {
 
         // given
-        var reader = new Reader(model);
-        var rootHandler = reader.handler('props:ComplexAttrs');
+        const reader = new Reader(model);
+        const rootHandler = reader.handler('props:ComplexAttrs');
 
-        var xml = '<props:complexAttrs xmlns:props="http://properties" ' +
+        const xml = '<props:complexAttrs xmlns:props="http://properties" ' +
                                       'xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">' +
                     '<props:attrs xsi:type="props:SubAttributes" integerValue="10" />' +
                   '</props:complexAttrs>';
@@ -177,10 +177,10 @@ describe('Reader', function() {
       it('simple / xsi:type / default ns', async function() {
 
         // given
-        var reader = new Reader(model);
-        var rootHandler = reader.handler('props:ComplexAttrs');
+        const reader = new Reader(model);
+        const rootHandler = reader.handler('props:ComplexAttrs');
 
-        var xml = '<complexAttrs xmlns="http://properties" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">' +
+        const xml = '<complexAttrs xmlns="http://properties" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">' +
                     '<attrs xsi:type="SubAttributes" integerValue="10" />' +
                   '</complexAttrs>';
 
@@ -203,10 +203,10 @@ describe('Reader', function() {
       it('simple / xsi:type / different ns prefix', async function() {
 
         // given
-        var reader = new Reader(model);
-        var rootHandler = reader.handler('props:ComplexAttrs');
+        const reader = new Reader(model);
+        const rootHandler = reader.handler('props:ComplexAttrs');
 
-        var xml = '<a:complexAttrs xmlns:a="http://properties" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">' +
+        const xml = '<a:complexAttrs xmlns:a="http://properties" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">' +
                     '<a:attrs xsi:type="a:SubAttributes" integerValue="10" />' +
                   '</a:complexAttrs>';
 
@@ -230,10 +230,10 @@ describe('Reader', function() {
       it('collection / no xsi:type', async function() {
 
         // given
-        var reader = new Reader(model);
-        var rootHandler = reader.handler('props:ComplexAttrsCol');
+        const reader = new Reader(model);
+        const rootHandler = reader.handler('props:ComplexAttrsCol');
 
-        var xml = '<props:complexAttrsCol xmlns:props="http://properties">' +
+        const xml = '<props:complexAttrsCol xmlns:props="http://properties">' +
                     '<props:attrs integerValue="10" />' +
                     '<props:attrs booleanValue="true" />' +
                   '</props:complexAttrsCol>';
@@ -256,13 +256,13 @@ describe('Reader', function() {
 
       it('collection / xsi:type / from other namespace)', async function() {
 
-        var datatypeModel = createModel(['datatype', 'datatype-external']);
+        const datatypeModel = createModel(['datatype', 'datatype-external']);
 
         // given
-        var reader = new Reader(datatypeModel);
-        var rootHandler = reader.handler('dt:Root');
+        const reader = new Reader(datatypeModel);
+        const rootHandler = reader.handler('dt:Root');
 
-        var xml =
+        const xml =
           '<dt:root xmlns:dt="http://datatypes" xmlns:do="http://datatypes2" ' +
                    'xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">' +
             '<dt:otherBounds xsi:type="dt:Rect" y="100" />' +
@@ -287,13 +287,13 @@ describe('Reader', function() {
 
       it('collection / xsi:type / from other namespace / default ns)', async function() {
 
-        var datatypeModel = createModel(['datatype', 'datatype-external']);
+        const datatypeModel = createModel(['datatype', 'datatype-external']);
 
         // given
-        var reader = new Reader(datatypeModel);
-        var rootHandler = reader.handler('dt:Root');
+        const reader = new Reader(datatypeModel);
+        const rootHandler = reader.handler('dt:Root');
 
-        var xml =
+        const xml =
           '<root xmlns="http://datatypes" xmlns:do="http://datatypes2" ' +
                 'xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">' +
             '<otherBounds xsi:type="Rect" y="100" />' +
@@ -318,13 +318,13 @@ describe('Reader', function() {
 
       it('collection / xsi:type / type alias', async function() {
 
-        var datatypeModel = createModel(['datatype', 'datatype-aliased']);
+        const datatypeModel = createModel(['datatype', 'datatype-aliased']);
 
         // given
-        var reader = new Reader(datatypeModel);
-        var rootHandler = reader.handler('dt:Root');
+        const reader = new Reader(datatypeModel);
+        const rootHandler = reader.handler('dt:Root');
 
-        var xml =
+        const xml =
           '<root xmlns="http://datatypes" xmlns:da="http://datatypes-aliased" ' +
                 'xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">' +
             '<otherBounds xsi:type="dt:Rect" y="100" />' +
@@ -349,13 +349,13 @@ describe('Reader', function() {
 
       it('collection / xsi:type / unknown type', async function() {
 
-        var datatypeModel = createModel([ 'datatype' ]);
+        const datatypeModel = createModel([ 'datatype' ]);
 
         // given
-        var reader = new Reader(datatypeModel);
-        var rootHandler = reader.handler('dt:Root');
+        const reader = new Reader(datatypeModel);
+        const rootHandler = reader.handler('dt:Root');
 
-        var xml =
+        const xml =
           '<root xmlns="http://datatypes" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">' +
             '<otherBounds xsi:type="Unknown" y="100" />' +
           '</root>';
@@ -373,13 +373,13 @@ describe('Reader', function() {
 
       it('generic, non-ns elements', async function() {
 
-        var extensionModel = createModel([ 'extension/base' ]);
+        const extensionModel = createModel([ 'extension/base' ]);
 
         // given
-        var reader = new Reader(extensionModel);
-        var rootHandler = reader.handler('b:Root');
+        const reader = new Reader(extensionModel);
+        const rootHandler = reader.handler('b:Root');
 
-        var xml =
+        const xml =
           '<b:Root xmlns:b="http://base">' +
             '<Any foo="BAR" />' +
           '</b:Root>';
@@ -406,10 +406,10 @@ describe('Reader', function() {
       it('with special characters', async function() {
 
         // given
-        var reader = new Reader(model);
-        var rootHandler = reader.handler('props:SimpleBodyProperties');
+        const reader = new Reader(model);
+        const rootHandler = reader.handler('props:SimpleBodyProperties');
 
-        var xml = '<props:simpleBodyProperties xmlns:props="http://properties" str="&#60;&#62;&#10;&#38;" />';
+        const xml = '<props:simpleBodyProperties xmlns:props="http://properties" str="&#60;&#62;&#10;&#38;" />';
 
         // when
         const {
@@ -427,8 +427,8 @@ describe('Reader', function() {
       it('inherited', async function() {
 
         // given
-        var reader = new Reader(extendedModel);
-        var rootHandler = reader.handler('ext:Root');
+        const reader = new Reader(extendedModel);
+        const rootHandler = reader.handler('ext:Root');
 
         // when
         const {
@@ -447,10 +447,10 @@ describe('Reader', function() {
       it('parse boolean property', async function() {
 
         // given
-        var reader = new Reader(model);
-        var rootHandler = reader.handler('props:SimpleBodyProperties');
+        const reader = new Reader(model);
+        const rootHandler = reader.handler('props:SimpleBodyProperties');
 
-        var xml = '<props:simpleBodyProperties xmlns:props="http://properties">' +
+        const xml = '<props:simpleBodyProperties xmlns:props="http://properties">' +
                     '<props:intValue>5</props:intValue>' +
                   '</props:simpleBodyProperties>';
 
@@ -470,10 +470,10 @@ describe('Reader', function() {
       it('parse boolean property', async function() {
 
         // given
-        var reader = new Reader(model);
-        var rootHandler = reader.handler('props:SimpleBodyProperties');
+        const reader = new Reader(model);
+        const rootHandler = reader.handler('props:SimpleBodyProperties');
 
-        var xml = '<props:simpleBodyProperties xmlns:props="http://properties">' +
+        const xml = '<props:simpleBodyProperties xmlns:props="http://properties">' +
                     '<props:boolValue>false</props:boolValue>' +
                   '</props:simpleBodyProperties>';
 
@@ -493,10 +493,10 @@ describe('Reader', function() {
       it('parse string isMany prooperty', async function() {
 
         // given
-        var reader = new Reader(model);
-        var rootHandler = reader.handler('props:SimpleBodyProperties');
+        const reader = new Reader(model);
+        const rootHandler = reader.handler('props:SimpleBodyProperties');
 
-        var xml = '<props:simpleBodyProperties xmlns:props="http://properties">' +
+        const xml = '<props:simpleBodyProperties xmlns:props="http://properties">' +
                     '<props:str>A</props:str>' +
                     '<props:str>B</props:str>' +
                     '<props:str>C</props:str>' +
@@ -518,10 +518,10 @@ describe('Reader', function() {
       it('should not discard value with an empty tag', async function() {
 
         // given
-        var reader = new Reader(createModel([ 'replace' ]));
-        var rootHandler = reader.handler('r:Extension');
+        const reader = new Reader(createModel([ 'replace' ]));
+        const rootHandler = reader.handler('r:Extension');
 
-        var xml = '<r:Extension xmlns:r="http://replace">' +
+        const xml = '<r:Extension xmlns:r="http://replace">' +
                     '<r:value></r:value>' +
                   '</r:Extension>';
 
@@ -545,10 +545,10 @@ describe('Reader', function() {
       it('parse body text property', async function() {
 
         // given
-        var reader = new Reader(model);
-        var rootHandler = reader.handler('props:SimpleBody');
+        const reader = new Reader(model);
+        const rootHandler = reader.handler('props:SimpleBody');
 
-        var xml = '<props:simpleBody xmlns:props="http://properties">textContent</props:simpleBody>';
+        const xml = '<props:simpleBody xmlns:props="http://properties">textContent</props:simpleBody>';
 
         // when
         const {
@@ -566,10 +566,10 @@ describe('Reader', function() {
       it('parse body text property / encoded', async function() {
 
         // given
-        var reader = new Reader(model);
-        var rootHandler = reader.handler('props:SimpleBody');
+        const reader = new Reader(model);
+        const rootHandler = reader.handler('props:SimpleBody');
 
-        var xml = (
+        const xml = (
           '<props:simpleBody xmlns:props="http://properties">' +
             '&lt; 10, &gt; 20, &amp;nbsp;' +
           '</props:simpleBody>'
@@ -591,10 +591,10 @@ describe('Reader', function() {
       it('parse body text property / trimmed whitespace', async function() {
 
         // given
-        var reader = new Reader(model);
-        var rootHandler = reader.handler('props:SimpleBody');
+        const reader = new Reader(model);
+        const rootHandler = reader.handler('props:SimpleBody');
 
-        var xml = '<props:simpleBody xmlns:props="http://properties">    </props:simpleBody>';
+        const xml = '<props:simpleBody xmlns:props="http://properties">    </props:simpleBody>';
 
         // when
         const {
@@ -611,10 +611,10 @@ describe('Reader', function() {
       it('parse body CDATA property / trimmed whitespace', async function() {
 
         // given
-        var reader = new Reader(model);
-        var rootHandler = reader.handler('props:SimpleBody');
+        const reader = new Reader(model);
+        const rootHandler = reader.handler('props:SimpleBody');
 
-        var xml = '<props:simpleBody xmlns:props="http://properties">' +
+        const xml = '<props:simpleBody xmlns:props="http://properties">' +
                   '   <![CDATA[<h2>HTML markup</h2>]]>' +
                   '</props:simpleBody>';
 
@@ -638,8 +638,8 @@ describe('Reader', function() {
       it('lowerCase', async function() {
 
         // given
-        var reader = new Reader(model);
-        var rootHandler = reader.handler('props:Root');
+        const reader = new Reader(model);
+        const rootHandler = reader.handler('props:Root');
 
         // when
         const {
@@ -654,10 +654,10 @@ describe('Reader', function() {
       it('none', async function() {
 
         // given
-        var noAliasModel = createModel(['noalias']);
+        const noAliasModel = createModel(['noalias']);
 
-        var reader = new Reader(noAliasModel);
-        var rootHandler = reader.handler('na:Root');
+        const reader = new Reader(noAliasModel);
+        const rootHandler = reader.handler('na:Root');
 
         // when
         const {
@@ -676,10 +676,10 @@ describe('Reader', function() {
       it('single', async function() {
 
         // given
-        var reader = new Reader(extendedModel);
-        var rootHandler = reader.handler('props:Root');
+        const reader = new Reader(extendedModel);
+        const rootHandler = reader.handler('props:Root');
 
-        var xml =
+        const xml =
           '<props:root xmlns:props="http://properties">' +
             '<props:containedCollection id="C_5">' +
               '<props:complex id="C_1" />' +
@@ -709,8 +709,8 @@ describe('Reader', function() {
           ]
         });
 
-        var referenced = element.any[0].children[0];
-        var referencingSingle = element.any[1];
+        const referenced = element.any[0].children[0];
+        const referencingSingle = element.any[1];
 
         expect(referencingSingle.referencedComplex).to.equal(referenced);
       });
@@ -719,10 +719,10 @@ describe('Reader', function() {
       it('collection', async function() {
 
         // given
-        var reader = new Reader(extendedModel);
-        var rootHandler = reader.handler('props:Root');
+        const reader = new Reader(extendedModel);
+        const rootHandler = reader.handler('props:Root');
 
-        var xml =
+        const xml =
           '<props:root xmlns:props="http://properties">' +
             '<props:containedCollection id="C_5">' +
               '<props:complex id="C_1" />' +
@@ -755,10 +755,10 @@ describe('Reader', function() {
           ]
         });
 
-        var containedCollection = element.any[0];
-        var complex_c2 = containedCollection.children[1];
+        const containedCollection = element.any[0];
+        const complex_c2 = containedCollection.children[1];
 
-        var referencingCollection = element.any[1];
+        const referencingCollection = element.any[1];
 
         expect(referencingCollection.references).to.jsonEqual([ complex_c2, containedCollection ]);
       });
@@ -767,10 +767,10 @@ describe('Reader', function() {
       it('attribute collection', async function() {
 
         // given
-        var reader = new Reader(extendedModel);
-        var rootHandler = reader.handler('props:Root');
+        const reader = new Reader(extendedModel);
+        const rootHandler = reader.handler('props:Root');
 
-        var xml =
+        const xml =
           '<props:root xmlns:props="http://properties">' +
             '<props:containedCollection id="C_5">' +
               '<props:complex id="C_1" />' +
@@ -802,11 +802,11 @@ describe('Reader', function() {
           ]
         });
 
-        var containedCollection = element.any[0];
-        var complex_c2 = containedCollection.children[1];
-        var complex_c3 = containedCollection.children[2];
+        const containedCollection = element.any[0];
+        const complex_c2 = containedCollection.children[1];
+        const complex_c3 = containedCollection.children[2];
 
-        var attrReferenceCollection = element.any[1];
+        const attrReferenceCollection = element.any[1];
 
         expect(attrReferenceCollection.refs).to.jsonEqual([
           complex_c2,
@@ -822,17 +822,17 @@ describe('Reader', function() {
 
   describe('should not import', function() {
 
-    var model = createModel([ 'properties' ]);
+    const model = createModel([ 'properties' ]);
 
     describe('wrong namespace', function() {
 
       it('same alias', async function() {
 
         // given
-        var reader = new Reader(model);
-        var rootHandler = reader.handler('props:Root');
+        const reader = new Reader(model);
+        const rootHandler = reader.handler('props:Root');
 
-        var xml = '<props:root xmlns:props="http://invalid">' +
+        const xml = '<props:root xmlns:props="http://invalid">' +
                     '<props:referencingSingle id="C_4" />' +
                   '</props:root>';
 
@@ -851,10 +851,10 @@ describe('Reader', function() {
       it('different alias', async function() {
 
         // given
-        var reader = new Reader(model);
-        var rootHandler = reader.handler('props:Root');
+        const reader = new Reader(model);
+        const rootHandler = reader.handler('props:Root');
 
-        var xml = '<props1:root xmlns:props1="http://invalid">' +
+        const xml = '<props1:root xmlns:props1="http://invalid">' +
                     '<props1:referencingSingle id="C_4" />' +
                   '</props1:root>';
 
@@ -876,7 +876,7 @@ describe('Reader', function() {
 
   describe('internal', function() {
 
-    var extendedModel = createModel([ 'properties', 'properties-extended' ]);
+    const extendedModel = createModel([ 'properties', 'properties-extended' ]);
 
 
     describe('should identify references', function() {
@@ -884,10 +884,10 @@ describe('Reader', function() {
       it('on attribute', async function() {
 
         // given
-        var reader = new Reader(extendedModel);
-        var rootHandler = reader.handler('props:ReferencingSingle');
+        const reader = new Reader(extendedModel);
+        const rootHandler = reader.handler('props:ReferencingSingle');
 
-        var xml = '<props:referencingSingle xmlns:props="http://properties" id="C_4" referencedComplex="C_1" />';
+        const xml = '<props:referencingSingle xmlns:props="http://properties" id="C_4" referencedComplex="C_1" />';
 
         // when
         const {
@@ -895,7 +895,7 @@ describe('Reader', function() {
         } = await reader.fromXML(xml, rootHandler);
 
         // then
-        var expectedReference = {
+        const expectedReference = {
           element: {
             $type: 'props:ReferencingSingle',
             id: 'C_4'
@@ -904,7 +904,7 @@ describe('Reader', function() {
           id: 'C_1'
         };
 
-        var references = context.references;
+        const references = context.references;
 
         expect(references).to.jsonEqual([ expectedReference ]);
       });
@@ -913,10 +913,10 @@ describe('Reader', function() {
       it('embedded', async function() {
 
         // given
-        var reader = new Reader(extendedModel);
-        var rootHandler = reader.handler('props:ReferencingCollection');
+        const reader = new Reader(extendedModel);
+        const rootHandler = reader.handler('props:ReferencingCollection');
 
-        var xml = '<props:referencingCollection xmlns:props="http://properties" id="C_4">' +
+        const xml = '<props:referencingCollection xmlns:props="http://properties" id="C_4">' +
                     '<props:references>C_2</props:references>' +
                     '<props:references>C_5</props:references>' +
                   '</props:referencingCollection>';
@@ -925,24 +925,24 @@ describe('Reader', function() {
           context
         } = await reader.fromXML(xml, rootHandler);
 
-        var expectedTarget = {
+        const expectedTarget = {
           $type: 'props:ReferencingCollection',
           id: 'C_4'
         };
 
-        var expectedReference1 = {
+        const expectedReference1 = {
           property: 'props:references',
           id: 'C_2',
           element: expectedTarget
         };
 
-        var expectedReference2 = {
+        const expectedReference2 = {
           property: 'props:references',
           id: 'C_5',
           element: expectedTarget
         };
 
-        var references = context.references;
+        const references = context.references;
 
         expect(references).to.jsonEqual([
           expectedReference1,
@@ -969,17 +969,17 @@ describe('Reader', function() {
       });
     }
 
-    var model = createModel([ 'properties' ]);
-    var extendedModel = createModel([ 'properties', 'properties-extended' ]);
+    const model = createModel([ 'properties' ]);
+    const extendedModel = createModel([ 'properties', 'properties-extended' ]);
 
 
     it('should handle non-xml text files', async function() {
 
       // given
-      var data = readFile('test/fixtures/error/no-xml.txt');
+      const data = readFile('test/fixtures/error/no-xml.txt');
 
-      var reader = new Reader(model);
-      var rootHandler = reader.handler('props:ComplexAttrs');
+      const reader = new Reader(model);
+      const rootHandler = reader.handler('props:ComplexAttrs');
 
       // when
       try {
@@ -995,10 +995,10 @@ describe('Reader', function() {
 
     it('should handle unexpected text', async function() {
 
-      var xml = '<props:complexAttrs xmlns:props="http://properties">a</props:complexAttrs>';
+      const xml = '<props:complexAttrs xmlns:props="http://properties">a</props:complexAttrs>';
 
-      var reader = new Reader(model);
-      var rootHandler = reader.handler('props:ComplexAttrs');
+      const reader = new Reader(model);
+      const rootHandler = reader.handler('props:ComplexAttrs');
 
       // when
       const {
@@ -1019,10 +1019,10 @@ describe('Reader', function() {
 
     it('should handle unexpected CDATA', async function() {
 
-      var xml = '<props:complexAttrs xmlns:props="http://properties"><![CDATA[a]]></props:complexAttrs>';
+      const xml = '<props:complexAttrs xmlns:props="http://properties"><![CDATA[a]]></props:complexAttrs>';
 
-      var reader = new Reader(model);
-      var rootHandler = reader.handler('props:ComplexAttrs');
+      const reader = new Reader(model);
+      const rootHandler = reader.handler('props:ComplexAttrs');
 
       // when
       const {
@@ -1043,10 +1043,10 @@ describe('Reader', function() {
 
     it('should handle incomplete attribute declaration', async function() {
 
-      var xml = '<props:complexAttrs xmlns:props="http://properties" foo />';
+      const xml = '<props:complexAttrs xmlns:props="http://properties" foo />';
 
-      var reader = new Reader(model);
-      var rootHandler = reader.handler('props:ComplexAttrs');
+      const reader = new Reader(model);
+      const rootHandler = reader.handler('props:ComplexAttrs');
 
       // when
       const {
@@ -1067,10 +1067,10 @@ describe('Reader', function() {
 
     it('should handle attribute re-definition', async function() {
 
-      var xml = '<props:complexAttrs xmlns:props="http://properties" id="A" id="B" />';
+      const xml = '<props:complexAttrs xmlns:props="http://properties" id="A" id="B" />';
 
-      var reader = new Reader(model);
-      var rootHandler = reader.handler('props:ComplexAttrs');
+      const reader = new Reader(model);
+      const rootHandler = reader.handler('props:ComplexAttrs');
 
       // when
       const {
@@ -1092,10 +1092,10 @@ describe('Reader', function() {
 
     it('should handle unparsable attributes', async function() {
 
-      var xml = '<props:complexAttrs id="A" foo=\'"" />';
+      const xml = '<props:complexAttrs id="A" foo=\'"" />';
 
-      var reader = new Reader(model);
-      var rootHandler = reader.handler('props:ComplexAttrs');
+      const reader = new Reader(model);
+      const rootHandler = reader.handler('props:ComplexAttrs');
 
       // when
       const {
@@ -1118,10 +1118,10 @@ describe('Reader', function() {
 
     it('should handle illegal ID attribute', async function() {
 
-      var xml = '<props:complexAttrs id="a&lt;" />';
+      const xml = '<props:complexAttrs id="a&lt;" />';
 
-      var reader = new Reader(model);
-      var rootHandler = reader.handler('props:ComplexAttrs');
+      const reader = new Reader(model);
+      const rootHandler = reader.handler('props:ComplexAttrs');
 
       // when
       try {
@@ -1138,10 +1138,10 @@ describe('Reader', function() {
 
     it('should handle non-xml binary file', async function() {
 
-      var data = readFile('test/fixtures/error/binary.png');
+      const data = readFile('test/fixtures/error/binary.png');
 
-      var reader = new Reader(model);
-      var rootHandler = reader.handler('props:ComplexAttrs');
+      const reader = new Reader(model);
+      const rootHandler = reader.handler('props:ComplexAttrs');
 
       // when
       try {
@@ -1160,15 +1160,15 @@ describe('Reader', function() {
 
       it('wrong type', async function() {
 
-        var xml = '<props:referencingCollection xmlns:props="http://properties" id="C_4">' +
+        const xml = '<props:referencingCollection xmlns:props="http://properties" id="C_4">' +
                     '<props:references>C_2</props:references>' +
                     '<props:references>C_5</props:references>' +
                   '</props:referencingCollection>';
 
-        var reader = new Reader(model);
-        var rootHandler = reader.handler('props:ComplexAttrs');
+        const reader = new Reader(model);
+        const rootHandler = reader.handler('props:ComplexAttrs');
 
-        var expectedError =
+        const expectedError =
           'unparsable content <props:referencingCollection> detected\n\t' +
               'line: 0\n\t' +
               'column: 0\n\t' +
@@ -1190,10 +1190,10 @@ describe('Reader', function() {
       it('wrong uri', async function() {
 
         // given
-        var reader = new Reader(model);
-        var rootHandler = reader.handler('props:Root');
+        const reader = new Reader(model);
+        const rootHandler = reader.handler('props:Root');
 
-        var xml = '<props:root xmlns:props="http://invalid">' +
+        const xml = '<props:root xmlns:props="http://invalid">' +
                     '<props:referencingSingle id="C_4" />' +
                   '</props:root>';
 
@@ -1213,10 +1213,10 @@ describe('Reader', function() {
       it('unknown uri + prefix', async function() {
 
         // given
-        var reader = new Reader(model);
-        var rootHandler = reader.handler('props:Root');
+        const reader = new Reader(model);
+        const rootHandler = reader.handler('props:Root');
 
-        var xml = '<props1:root xmlns:props1="http://invalid">' +
+        const xml = '<props1:root xmlns:props1="http://invalid">' +
                     '<props1:referencingSingle id="C_4" />' +
                   '</props1:root>';
 
@@ -1236,10 +1236,10 @@ describe('Reader', function() {
       it('missing namespace', async function() {
 
         // given
-        var reader = new Reader(model);
-        var rootHandler = reader.handler('props:Root');
+        const reader = new Reader(model);
+        const rootHandler = reader.handler('props:Root');
 
-        var xml = '<root xmlns:props="http://properties">' +
+        const xml = '<root xmlns:props="http://properties">' +
                     '<referencingSingle id="C_4" />' +
                   '</root>';
 
@@ -1259,10 +1259,10 @@ describe('Reader', function() {
       it('unparsable root element / lax mode', async function() {
 
         // given
-        var reader = new Reader({ model: model, lax: true });
-        var rootHandler = reader.handler('props:Root');
+        const reader = new Reader({ model: model, lax: true });
+        const rootHandler = reader.handler('props:Root');
 
-        var xml = '<root xmlns:props="http://properties">' +
+        const xml = '<root xmlns:props="http://properties">' +
                     '<referencingSingle id="C_4" />' +
                   '</root>';
 
@@ -1283,15 +1283,15 @@ describe('Reader', function() {
 
     it('should handle invalid child element', async function() {
 
-      var xml = '<props:referencingCollection xmlns:props="http://properties" id="C_4">' +
+      const xml = '<props:referencingCollection xmlns:props="http://properties" id="C_4">' +
                   '<props:references>C_2</props:references>' +
                   '<props:invalid>C_5</props:invalid>' +
                 '</props:referencingCollection>';
 
-      var reader = new Reader(model);
-      var rootHandler = reader.handler('props:ReferencingCollection');
+      const reader = new Reader(model);
+      const rootHandler = reader.handler('props:ReferencingCollection');
 
-      var expectedError =
+      const expectedError =
         'unparsable content <props:invalid> detected\n\t' +
             'line: 0\n\t' +
             'column: 110\n\t' +
@@ -1312,14 +1312,14 @@ describe('Reader', function() {
 
     it('should handle invalid child element / non-model schema', async function() {
 
-      var xml = '<props:referencingCollection xmlns:props="http://properties" xmlns:other="http://other">' +
+      const xml = '<props:referencingCollection xmlns:props="http://properties" xmlns:other="http://other">' +
                   '<other:foo>C_2</other:foo>' +
                 '</props:referencingCollection>';
 
-      var reader = new Reader(model);
-      var rootHandler = reader.handler('props:ReferencingCollection');
+      const reader = new Reader(model);
+      const rootHandler = reader.handler('props:ReferencingCollection');
 
-      var expectedError =
+      const expectedError =
         'unparsable content <other:foo> detected\n\t' +
             'line: 0\n\t' +
             'column: 88\n\t' +
@@ -1340,14 +1340,14 @@ describe('Reader', function() {
 
     it('should handle duplicate id', async function() {
 
-      var xml = '<props:root xmlns:props="http://properties" id="root">' +
+      const xml = '<props:root xmlns:props="http://properties" id="root">' +
                   '<props:baseWithId id="root" />' +
                 '</props:root>';
 
-      var reader = new Reader(model);
-      var rootHandler = reader.handler('props:Root');
+      const reader = new Reader(model);
+      const rootHandler = reader.handler('props:Root');
 
-      var expectedError =
+      const expectedError =
         'unparsable content <props:baseWithId> detected\n\t' +
             'line: 0\n\t' +
             'column: 54\n\t' +
@@ -1373,10 +1373,10 @@ describe('Reader', function() {
         it('on unresolvable reference', async function() {
 
           // given
-          var reader = new Reader(extendedModel);
-          var rootHandler = reader.handler('props:Root');
+          const reader = new Reader(extendedModel);
+          const rootHandler = reader.handler('props:Root');
 
-          var xml =
+          const xml =
             '<props:root xmlns:props="http://properties">' +
               '<props:referencingSingle id="C_4" referencedComplex="C_1" />' +
             '</props:root>';
@@ -1395,7 +1395,7 @@ describe('Reader', function() {
             ]
           });
 
-          var referencingSingle = element.any[0];
+          const referencingSingle = element.any[0];
 
           expect(referencingSingle.referencedComplex).not.to.exist;
 
@@ -1414,10 +1414,10 @@ describe('Reader', function() {
         it('on unresolvable collection reference', async function() {
 
           // given
-          var reader = new Reader(extendedModel);
-          var rootHandler = reader.handler('props:Root');
+          const reader = new Reader(extendedModel);
+          const rootHandler = reader.handler('props:Root');
 
-          var xml =
+          const xml =
             '<props:root xmlns:props="http://properties">' +
               '<props:containedCollection id="C_5">' +
                 '<props:complex id="C_2" />' +
@@ -1450,8 +1450,8 @@ describe('Reader', function() {
           });
 
           // expect invalid reference not to be included
-          var c2 = element.any[0].children[0];
-          var referencingCollection = element.any[1];
+          const c2 = element.any[0].children[0];
+          const referencingCollection = element.any[1];
 
           expect(referencingCollection.references).to.jsonEqual([ c2 ]);
 
@@ -1475,16 +1475,16 @@ describe('Reader', function() {
 
   describe('lax error handling', function() {
 
-    var model = createModel([ 'properties' ]);
+    const model = createModel([ 'properties' ]);
 
 
     it('should ignore namespaced invalid child', async function() {
 
       // given
-      var reader = new Reader({ model: model, lax: true });
-      var rootHandler = reader.handler('props:ComplexAttrs');
+      const reader = new Reader({ model: model, lax: true });
+      const rootHandler = reader.handler('props:ComplexAttrs');
 
-      var xml = '<props:complexAttrs xmlns:props="http://properties">' +
+      const xml = '<props:complexAttrs xmlns:props="http://properties">' +
                   '<props:unknownElement foo="bar">' +
                     '<props:unknownChild />' +
                   '</props:unknownElement>' +
@@ -1498,7 +1498,7 @@ describe('Reader', function() {
       // then
       expect(context.warnings).to.have.length(1);
 
-      var warning = context.warnings[0];
+      const warning = context.warnings[0];
 
       expect(warning.message).to.eql(
         'unparsable content <props:unknownElement> detected\n\t' +
@@ -1516,10 +1516,10 @@ describe('Reader', function() {
     it('should ignore invalid child', async function() {
 
       // given
-      var reader = new Reader({ model: model, lax: true });
-      var rootHandler = reader.handler('props:ComplexAttrs');
+      const reader = new Reader({ model: model, lax: true });
+      const rootHandler = reader.handler('props:ComplexAttrs');
 
-      var xml = '<props:complexAttrs xmlns:props="http://properties">' +
+      const xml = '<props:complexAttrs xmlns:props="http://properties">' +
                   '<unknownElement foo="bar" />' +
                 '</props:complexAttrs>';
 
@@ -1531,7 +1531,7 @@ describe('Reader', function() {
       // then
       expect(context.warnings).to.have.length(1);
 
-      var warning = context.warnings[0];
+      const warning = context.warnings[0];
 
       expect(warning.message).to.eql(
         'unparsable content <unknownElement> detected\n\t' +
@@ -1550,7 +1550,7 @@ describe('Reader', function() {
 
   describe('extension handling', function() {
 
-    var extensionModel = createModel([ 'extensions' ]);
+    const extensionModel = createModel([ 'extensions' ]);
 
 
     describe('attributes', function() {
@@ -1558,10 +1558,10 @@ describe('Reader', function() {
       it('should read extension attributes', async function() {
 
         // given
-        var reader = new Reader(extensionModel);
-        var rootHandler = reader.handler('e:Root');
+        const reader = new Reader(extensionModel);
+        const rootHandler = reader.handler('e:Root');
 
-        var xml = '<e:root xmlns:e="http://extensions" xmlns:other="http://other" other:foo="BAR" />';
+        const xml = '<e:root xmlns:e="http://extensions" xmlns:other="http://other" other:foo="BAR" />';
 
         const {
           element
@@ -1579,10 +1579,10 @@ describe('Reader', function() {
       it('should read default ns', async function() {
 
         // given
-        var reader = new Reader(extensionModel);
-        var rootHandler = reader.handler('e:Root');
+        const reader = new Reader(extensionModel);
+        const rootHandler = reader.handler('e:Root');
 
-        var xml = '<root xmlns="http://extensions" />';
+        const xml = '<root xmlns="http://extensions" />';
 
         const {
           element
@@ -1602,10 +1602,10 @@ describe('Reader', function() {
       it('should read self-closing extension elements', async function() {
 
         // given
-        var reader = new Reader(extensionModel);
-        var rootHandler = reader.handler('e:Root');
+        const reader = new Reader(extensionModel);
+        const rootHandler = reader.handler('e:Root');
 
-        var xml =
+        const xml =
           '<e:root xmlns:e="http://extensions" xmlns:other="http://other">' +
             '<e:id>FOO</e:id>' +
             '<other:meta key="FOO" value="BAR" />' +
@@ -1640,10 +1640,10 @@ describe('Reader', function() {
       it('should read extension element body', async function() {
 
         // given
-        var reader = new Reader(extensionModel);
-        var rootHandler = reader.handler('e:Root');
+        const reader = new Reader(extensionModel);
+        const rootHandler = reader.handler('e:Root');
 
-        var xml =
+        const xml =
           '<e:root xmlns:e="http://extensions" xmlns:other="http://other">' +
             '<e:id>FOO</e:id>' +
             '<other:note>' +
@@ -1673,10 +1673,10 @@ describe('Reader', function() {
       it('should read nested extension element', async function() {
 
         // given
-        var reader = new Reader(extensionModel);
-        var rootHandler = reader.handler('e:Root');
+        const reader = new Reader(extensionModel);
+        const rootHandler = reader.handler('e:Root');
 
-        var xml =
+        const xml =
           '<e:root xmlns:e="http://extensions" xmlns:other="http://other">' +
             '<e:id>FOO</e:id>' +
             '<other:nestedMeta>' +
@@ -1716,10 +1716,10 @@ describe('Reader', function() {
         it('should exist', async function() {
 
           // given
-          var reader = new Reader(extensionModel);
-          var rootHandler = reader.handler('e:Root');
+          const reader = new Reader(extensionModel);
+          const rootHandler = reader.handler('e:Root');
 
-          var xml =
+          const xml =
             '<e:root xmlns:e="http://extensions" xmlns:other="http://other">' +
               '<e:id>FOO</e:id>' +
               '<other:note>' +
@@ -1732,7 +1732,7 @@ describe('Reader', function() {
             element
           } = await reader.fromXML(xml, rootHandler);
 
-          var note = element.extensions[0];
+          const note = element.extensions[0];
 
           // then
           expect(note.$descriptor).to.exist;
@@ -1742,10 +1742,10 @@ describe('Reader', function() {
         it('should contain namespace information', async function() {
 
           // given
-          var reader = new Reader(extensionModel);
-          var rootHandler = reader.handler('e:Root');
+          const reader = new Reader(extensionModel);
+          const rootHandler = reader.handler('e:Root');
 
-          var xml =
+          const xml =
             '<e:root xmlns:e="http://extensions" xmlns:other="http://other">' +
               '<e:id>FOO</e:id>' +
               '<other:note>' +
@@ -1758,7 +1758,7 @@ describe('Reader', function() {
             element
           } = await reader.fromXML(xml, rootHandler);
 
-          var note = element.extensions[0];
+          const note = element.extensions[0];
 
           // then
           expect(note.$descriptor).to.eql({
@@ -1780,10 +1780,10 @@ describe('Reader', function() {
         it('should handle nested', async function() {
 
           // given
-          var reader = new Reader(extensionModel);
-          var rootHandler = reader.handler('e:Root');
+          const reader = new Reader(extensionModel);
+          const rootHandler = reader.handler('e:Root');
 
-          var xml =
+          const xml =
             '<e:root xmlns:e="http://extensions">' +
               '<bar:bar xmlns:bar="http://bar">' +
                 '<other:child b="B" xmlns:other="http://other" />' +
@@ -1828,10 +1828,10 @@ describe('Reader', function() {
         it('should handle nested, re-declaring default', async function() {
 
           // given
-          var reader = new Reader(extensionModel);
-          var rootHandler = reader.handler('e:Root');
+          const reader = new Reader(extensionModel);
+          const rootHandler = reader.handler('e:Root');
 
-          var xml =
+          const xml =
             '<root xmlns="http://extensions">' +
               '<bar:bar xmlns:bar="http://bar">' +
                 '<other:child b="B" xmlns:other="http://other" />' +
@@ -1884,18 +1884,18 @@ describe('Reader', function() {
 
   describe('parent -> child relationship', function() {
 
-    var model = createModel([ 'properties' ]);
-    var extendedModel = createModel([ 'properties', 'properties-extended' ]);
-    var extensionModel = createModel([ 'extensions' ]);
+    const model = createModel([ 'properties' ]);
+    const extendedModel = createModel([ 'properties', 'properties-extended' ]);
+    const extensionModel = createModel([ 'extensions' ]);
 
 
     it('should expose $parent on model elements', async function() {
 
       // given
-      var reader = new Reader(model);
-      var rootHandler = reader.handler('props:ComplexAttrs');
+      const reader = new Reader(model);
+      const rootHandler = reader.handler('props:ComplexAttrs');
 
-      var xml = '<props:complexAttrs xmlns:props="http://properties" ' +
+      const xml = '<props:complexAttrs xmlns:props="http://properties" ' +
                                     'xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">' +
                   '<props:attrs xsi:type="props:Attributes" integerValue="10" />' +
                 '</props:complexAttrs>';
@@ -1914,10 +1914,10 @@ describe('Reader', function() {
     it('should expose $parent on references', async function() {
 
       // given
-      var reader = new Reader(extendedModel);
-      var rootHandler = reader.handler('props:Root');
+      const reader = new Reader(extendedModel);
+      const rootHandler = reader.handler('props:Root');
 
-      var xml =
+      const xml =
         '<props:root xmlns:props="http://properties">' +
           '<props:containedCollection id="C_5">' +
             '<props:complex id="C_1" />' +
@@ -1931,8 +1931,8 @@ describe('Reader', function() {
         element
       } = await reader.fromXML(xml, rootHandler);
 
-      var containedCollection = element.any[0];
-      var referencedComplex = element.any[1].referencedComplex;
+      const containedCollection = element.any[0];
+      const referencedComplex = element.any[1].referencedComplex;
 
       // then
       expect(referencedComplex.$parent).to.equal(containedCollection);
@@ -1942,10 +1942,10 @@ describe('Reader', function() {
     it('should expose $parent on extension elements', async function() {
 
       // given
-      var reader = new Reader(extensionModel);
-      var rootHandler = reader.handler('e:Root');
+      const reader = new Reader(extensionModel);
+      const rootHandler = reader.handler('e:Root');
 
-      var xml =
+      const xml =
         '<e:root xmlns:e="http://extensions" xmlns:other="http://other">' +
           '<e:id>FOO</e:id>' +
           '<other:nestedMeta>' +
@@ -1962,8 +1962,8 @@ describe('Reader', function() {
         element
       } = await reader.fromXML(xml, rootHandler);
 
-      var child = element.extensions[0];
-      var nested = child.$children[0];
+      const child = element.extensions[0];
+      const nested = child.$children[0];
 
       // then
       expect(child.$parent).to.equal(element);
@@ -1990,17 +1990,17 @@ describe('Reader', function() {
 
   describe('qualified extensions', function() {
 
-    var extensionModel = createModel([ 'extension/base', 'extension/custom' ]);
-    var model = createModel([ 'properties' ]);
+    const extensionModel = createModel([ 'extension/base', 'extension/custom' ]);
+    const model = createModel([ 'properties' ]);
 
 
     it('should read typed extension property', async function() {
 
       // given
-      var reader = new Reader(extensionModel);
-      var rootHandler = reader.handler('b:Root');
+      const reader = new Reader(extensionModel);
+      const rootHandler = reader.handler('b:Root');
 
-      var xml =
+      const xml =
         '<b:Root xmlns:b="http://base" xmlns:c="http://custom">' +
           '<c:CustomGeneric count="10" />' +
         '</b:Root>';
@@ -2025,10 +2025,10 @@ describe('Reader', function() {
     it('should read typed extension attribute', async function() {
 
       // given
-      var reader = new Reader(extensionModel);
-      var rootHandler = reader.handler('b:Root');
+      const reader = new Reader(extensionModel);
+      const rootHandler = reader.handler('b:Root');
 
-      var xml =
+      const xml =
         '<b:Root xmlns:b="http://base" xmlns:c="http://custom" ' +
                 'c:customAttr="666">' +
         '</b:Root>';
@@ -2050,10 +2050,10 @@ describe('Reader', function() {
     it('should read generic collection', async function() {
 
       // given
-      var reader = new Reader(extensionModel);
-      var rootHandler = reader.handler('b:Root');
+      const reader = new Reader(extensionModel);
+      const rootHandler = reader.handler('b:Root');
 
-      var xml =
+      const xml =
         '<b:Root xmlns:b="http://base" xmlns:c="http://custom" ' +
                 'xmlns:other="http://other">' +
           '<c:Property key="foo" value="FOO" />' +
@@ -2097,10 +2097,10 @@ describe('Reader', function() {
         it('extension NS', async function() {
 
           // given
-          var reader = new Reader(extensionModel);
-          var rootHandler = reader.handler('b:Root');
+          const reader = new Reader(extensionModel);
+          const rootHandler = reader.handler('b:Root');
 
-          var xml = `
+          const xml = `
             <b:Root xmlns:b="http://base"
                     xmlns:c="http://custom"
                     xmlns:foo="http://foo"
@@ -2117,7 +2117,7 @@ describe('Reader', function() {
           // then
           expect(context.warnings).to.have.length(1);
 
-          var warning = context.warnings[0];
+          const warning = context.warnings[0];
 
           expect(warning.message).to.eql(
             'unknown attribute <c:unknownAttribute>'
@@ -2139,10 +2139,10 @@ describe('Reader', function() {
         it('local NS', async function() {
 
           // given
-          var reader = new Reader({ model: model, lax: true });
-          var rootHandler = reader.handler('props:ComplexAttrs');
+          const reader = new Reader({ model: model, lax: true });
+          const rootHandler = reader.handler('props:ComplexAttrs');
 
-          var xml = '<props:complexAttrs xmlns:props="http://properties" props:unknownAttribute="FOO" />';
+          const xml = '<props:complexAttrs xmlns:props="http://properties" props:unknownAttribute="FOO" />';
 
           const {
             element,
@@ -2152,7 +2152,7 @@ describe('Reader', function() {
           // then
           expect(context.warnings).to.have.length(1);
 
-          var warning = context.warnings[0];
+          const warning = context.warnings[0];
 
           expect(warning.message).to.eql(
             'unknown attribute <props:unknownAttribute>'
@@ -2174,10 +2174,10 @@ describe('Reader', function() {
       it('should permit non-well-known attributes', async function() {
 
         // given
-        var reader = new Reader(extensionModel);
-        var rootHandler = reader.handler('b:Root');
+        const reader = new Reader(extensionModel);
+        const rootHandler = reader.handler('b:Root');
 
-        var xml = `
+        const xml = `
           <b:Root
               xmlns:b="http://base"
               xmlns:blub="http://blub"
@@ -2209,10 +2209,10 @@ describe('Reader', function() {
       it('should fail parsing unknown element', async function() {
 
         // given
-        var reader = new Reader(extensionModel);
-        var rootHandler = reader.handler('b:Root');
+        const reader = new Reader(extensionModel);
+        const rootHandler = reader.handler('b:Root');
 
-        var xml =
+        const xml =
           '<b:Root xmlns:b="http://base" xmlns:c="http://custom" ' +
                   'xmlns:other="http://other">' +
             '<c:NonExisting />' +
@@ -2236,16 +2236,16 @@ describe('Reader', function() {
 
   describe('fake ids', function() {
 
-    var fakeIdsModel = createModel([ 'fake-id' ]);
+    const fakeIdsModel = createModel([ 'fake-id' ]);
 
 
     it('should ignore (non-id) id attribute', async function() {
 
       // given
-      var reader = new Reader(fakeIdsModel);
-      var rootHandler = reader.handler('fi:Root');
+      const reader = new Reader(fakeIdsModel);
+      const rootHandler = reader.handler('fi:Root');
 
-      var xml =
+      const xml =
         '<fi:Root xmlns:fi="http://fakeid">' +
           '<fi:ChildWithFakeId id="FOO" />' +
         '</fi:Root>';
@@ -2274,10 +2274,10 @@ describe('Reader', function() {
     it('should not-resolve (non-id) id references', async function() {
 
       // given
-      var reader = new Reader(fakeIdsModel);
-      var rootHandler = reader.handler('fi:Root');
+      const reader = new Reader(fakeIdsModel);
+      const rootHandler = reader.handler('fi:Root');
 
-      var xml =
+      const xml =
         '<fi:Root xmlns:fi="http://fakeid">' +
           '<fi:ChildWithFakeId id="FOO" />' +
           '<fi:ChildWithFakeId ref="FOO" />' +
@@ -2312,15 +2312,15 @@ describe('Reader', function() {
 
   describe('encoding', function() {
 
-    var model = createModel([ 'properties' ]);
+    const model = createModel([ 'properties' ]);
 
     it('should decode UTF-8, no problemo', async function() {
 
       // given
-      var reader = new Reader(model);
-      var rootHandler = reader.handler('props:ComplexAttrs');
+      const reader = new Reader(model);
+      const rootHandler = reader.handler('props:ComplexAttrs');
 
-      var xml =
+      const xml =
         '<?xml version="1.0" encoding="utf-8"?>' +
         '<props:complexAttrs xmlns:props="http://properties">' +
         '</props:complexAttrs>';
@@ -2342,10 +2342,10 @@ describe('Reader', function() {
     it('should warn on non-UTF-8 encoded files', async function() {
 
       // given
-      var reader = new Reader(model);
-      var rootHandler = reader.handler('props:ComplexAttrs');
+      const reader = new Reader(model);
+      const rootHandler = reader.handler('props:ComplexAttrs');
 
-      var xml =
+      const xml =
         '<?xml encoding="windows-1252"?>' +
         '<props:complexAttrs xmlns:props="http://properties">' +
         '</props:complexAttrs>';
@@ -2369,10 +2369,10 @@ describe('Reader', function() {
     it('should warn on non-UTF-8 encoded files / CAPITALIZED', async function() {
 
       // given
-      var reader = new Reader(model);
-      var rootHandler = reader.handler('props:ComplexAttrs');
+      const reader = new Reader(model);
+      const rootHandler = reader.handler('props:ComplexAttrs');
 
-      var xml =
+      const xml =
         '<?XML ENCODING="WINDOWS-1252"?>' +
         '<props:complexAttrs xmlns:props="http://properties">' +
         '</props:complexAttrs>';
@@ -2397,23 +2397,23 @@ describe('Reader', function() {
 
   describe('attr <> child conflict', function() {
 
-    var model = createModel([ 'attr-child-conflict' ]);
+    const model = createModel([ 'attr-child-conflict' ]);
 
 
     it('should import attr and child with the same name', async function() {
 
       // given
-      var reader = new Reader(model);
-      var rootHandler = reader.handler('s:Foo');
+      const reader = new Reader(model);
+      const rootHandler = reader.handler('s:Foo');
 
-      var xml = `
+      const xml = `
         <s:foo xmlns:s="http://s" bar="Bar">
           <s:bar woop="WHOOPS">
           </s:bar>
         </s:foo>`;
 
       // when
-      var {
+      const {
         element
       } = await reader.fromXML(xml, rootHandler);
 
