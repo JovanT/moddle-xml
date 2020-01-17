@@ -19,45 +19,94 @@ describe('Reader', function() {
 
     var model = createModel([ 'properties' ]);
 
-    it('should provide result with context', function(done) {
 
-      // given
-      var reader = new Reader(model);
-      var rootHandler = reader.handler('props:ComplexAttrs');
+    describe('callback style', function() {
 
-      var xml = '<props:complexAttrs xmlns:props="http://properties"></props:complexAttrs>';
+      it('should provide result with context', function(done) {
 
-      // when
-      reader.fromXML(xml, rootHandler, function(err, result, context) {
+        // given
+        var reader = new Reader(model);
+        var rootHandler = reader.handler('props:ComplexAttrs');
 
-        // then
-        expect(err).not.to.exist;
+        var xml = '<props:complexAttrs xmlns:props="http://properties"></props:complexAttrs>';
 
-        expect(result).to.exist;
-        expect(context).to.exist;
+        // when
+        reader.fromXML(xml, rootHandler, function(err, result, context) {
 
-        done();
+          // then
+          expect(err).not.to.exist;
+
+          expect(result).to.exist;
+          expect(context).to.exist;
+
+          done();
+        });
       });
+
+
+      it('should provide error with context', function(done) {
+
+        // given
+        var reader = new Reader(model);
+        var rootHandler = reader.handler('props:ComplexAttrs');
+
+        // when
+        reader.fromXML('this-is-garbage', rootHandler, function(err, result, context) {
+
+          // then
+          expect(err).to.exist;
+
+          expect(result).not.to.exist;
+          expect(context).to.exist;
+
+          done();
+        });
+      });
+
     });
 
 
-    it('should provide error with context', function(done) {
+    describe('awaitable', function() {
 
-      // given
-      var reader = new Reader(model);
-      var rootHandler = reader.handler('props:ComplexAttrs');
+      it('should provide result with context', async function() {
 
-      // when
-      reader.fromXML('this-is-garbage', rootHandler, function(err, result, context) {
+        // given
+        var reader = new Reader(model);
+        var rootHandler = reader.handler('props:ComplexAttrs');
+
+        var xml = '<props:complexAttrs xmlns:props="http://properties"></props:complexAttrs>';
+
+        // when
+        var {
+          element,
+          context
+        } = await reader.fromXML(xml, rootHandler);
 
         // then
-        expect(err).to.exist;
-
-        expect(result).not.to.exist;
+        expect(element).to.exist;
         expect(context).to.exist;
-
-        done();
       });
+
+
+      it('should provide error with context', async function() {
+
+        // given
+        var reader = new Reader(model);
+        var rootHandler = reader.handler('props:ComplexAttrs');
+
+        // when
+        try {
+          await reader.fromXML('this-is-garbage', rootHandler);
+
+          expectedError();
+        } catch (error) {
+
+          // then
+          expect(error).to.exist;
+          expect(error).to.have.property('context');
+        }
+      });
+
     });
 
   });
@@ -2579,3 +2628,10 @@ describe('Reader', function() {
   });
 
 });
+
+
+// helpers //////////////
+
+function expectedError() {
+  return expect.fail('expected error');
+}
