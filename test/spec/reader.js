@@ -19,6 +19,7 @@ describe('Reader', function() {
 
     var model = createModel([ 'properties' ]);
 
+
     it('should resolve with context', async function() {
 
       // given
@@ -71,6 +72,30 @@ describe('Reader', function() {
 
     var model = createModel([ 'properties' ]);
     var extendedModel = createModel([ 'properties', 'properties-extended' ]);
+
+
+    it('xml:lang attribute', async function() {
+
+      // given
+      var reader = new Reader(model);
+      var rootHandler = reader.handler('props:ComplexAttrs');
+
+      var xml = '<props:complexAttrs xmlns:props="http://properties" xml:lang="en" />';
+
+      // when
+      var {
+        rootElement,
+        warnings
+      } = await reader.fromXML(xml, rootHandler);
+
+      // then
+      expect(warnings).to.be.empty;
+
+      expect(rootElement.$attrs).to.eql({
+        'xmlns:props': 'http://properties',
+        'xml:lang': 'en'
+      });
+    });
 
 
     describe('data types', function() {

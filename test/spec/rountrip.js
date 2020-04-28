@@ -18,18 +18,26 @@ describe('Roundtrip', function() {
 
   var createModel = createModelBuilder('test/fixtures/model/');
 
-  var createWriter = function(model, options) {
-    return new Writer(assign({ preamble: false }, options || {}));
-  };
+  function setup(packages) {
+
+    var model = createModel(packages);
+
+    return {
+      model,
+      reader: new Reader(model),
+      writer: new Writer({ preamble: false })
+    };
+  }
 
 
   it('should strip unused global', async function() {
 
     // given
-    var extendedModel = createModel([ 'properties', 'properties-extended' ]);
-
-    var reader = new Reader(extendedModel);
-    var writer = createWriter(extendedModel);
+    var {
+      model,
+      reader,
+      writer
+    } = setup([ 'properties', 'properties-extended' ]);
 
     var rootHandler = reader.handler('ext:Root');
 
@@ -57,10 +65,11 @@ describe('Roundtrip', function() {
   it('should reuse global namespace', async function() {
 
     // given
-    var extendedModel = createModel([ 'properties', 'properties-extended' ]);
-
-    var reader = new Reader(extendedModel);
-    var writer = createWriter(extendedModel);
+    var {
+      model,
+      reader,
+      writer
+    } = setup([ 'properties', 'properties-extended' ]);
 
     var rootHandler = reader.handler('props:ComplexNesting');
 
@@ -85,6 +94,31 @@ describe('Roundtrip', function() {
         '</complexNesting>' +
       '</root:complexNesting>'
     );
+  });
+
+
+  it('should serialize xml:... attributes', async function() {
+
+    // given
+    var {
+      model,
+      reader,
+      writer
+    } = setup([ 'properties' ]);
+
+    var rootHandler = reader.handler('props:Root');
+
+    var input = '<root xmlns="http://properties" xml:lang="en" />';
+
+    // when
+    var {
+      rootElement
+    } = await reader.fromXML(input, rootHandler);
+
+    var output = writer.toXML(rootElement);
+
+    // then
+    expect(output).to.eql(input);
   });
 
 });
